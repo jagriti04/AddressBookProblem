@@ -7,9 +7,11 @@ public class AddressBook {
 	private ArrayList<ContactDetails> contactDetailList;
 	private Map<String, ContactDetails> nameToContactDetailsMap;
 	
+	
 	public AddressBook() {
 		contactDetailList = new ArrayList<ContactDetails>();
 		nameToContactDetailsMap = new HashMap<>();
+		
 	}
 	
 	public void addContacts(ContactDetails contactPerson) {
@@ -114,8 +116,6 @@ public class AddressBook {
 						break;
 				default: System.out.println("No edits");
 						 return;
-				
-				
 			}
 		} else {
 			System.out.println("No such contact");
@@ -136,11 +136,12 @@ public class AddressBook {
 		}
 	}
 	
-	public static void main(String[] args) {
+	public AddressBook addressBookOption() {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Welcome to the address book system. Choose your option");
 		AddressBook addBook = new AddressBook();
-		while(true) {
+		boolean runLoop = true;
+		while(runLoop) {
 			System.out.println("Press 1 for adding contact \nPress 2 to view contacts "
 					+ "\nPress 3 to edit a contact \nPress 4 to delete a contact \nPress 5 to exit");
 			int ch = sc.nextInt();
@@ -165,13 +166,14 @@ public class AddressBook {
 						break;
 						
 				case 5: System.out.println("exit");
-						return;
+						runLoop = false;
+						break;
 						
 				default: System.out.println("No correct option chosen");
 					
 				
 			}
 		}
-		
+		return addBook;
 	}
 }
