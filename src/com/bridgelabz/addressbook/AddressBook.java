@@ -122,6 +122,19 @@ public class AddressBook {
 		}
 		
 	}
+	public void deleteContact() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter first name of contact to delete it");
+		String cName = sc.nextLine();
+		
+		if (nameToContactDetailsMap.containsKey(cName)) {
+			ContactDetails conInfo = nameToContactDetailsMap.get(cName);
+			nameToContactDetailsMap.remove(cName, conInfo);
+			contactDetailList.remove(conInfo);
+		} else {
+			System.out.println("No such contact to delete");
+		}
+	}
 	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
@@ -129,7 +142,7 @@ public class AddressBook {
 		AddressBook addBook = new AddressBook();
 		while(true) {
 			System.out.println("Press 1 for adding contact \nPress 2 to view contacts "
-					+ "\nPress 3 to edit contact \nPress 4 to exit");
+					+ "\nPress 3 to edit a contact \nPress 4 to delete a contact \nPress 5 to exit");
 			int ch = sc.nextInt();
 			
 			switch(ch) {
@@ -146,8 +159,12 @@ public class AddressBook {
 				case 3: System.out.println("---- Editing contacts---");
 						addBook.editContact();
 						break;
+				
+				case 4: System.out.println("---- Delete a contact---");
+						addBook.deleteContact();
+						break;
 						
-				case 4: System.out.println("exit");
+				case 5: System.out.println("exit");
 						return;
 						
 				default: System.out.println("No correct option chosen");
