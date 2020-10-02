@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class AdressBookManage {
 	
 	private Map<String, AddressBook> nameToAddressBookMap;
+	private int countPerson = 0;
 	
 	public AdressBookManage( ) {
 		nameToAddressBookMap = new HashMap<>();
@@ -38,17 +39,20 @@ public class AdressBookManage {
 		}
 	}
 	
-	public void findPersonByCityState(String place, int isCity) {
+	public int findPersonByCityState(String place, int isCity) {
+		countPerson = 0;
 		nameToAddressBookMap.forEach((key, addresBookValue) -> {
 			if (addresBookValue.nameToContactDetailsMap.size() >0) {
 				addresBookValue.nameToContactDetailsMap.forEach((name, contactValue) -> {
 					if (isCity == 1) {
 						if (contactValue.city.equals(place)) {
 							System.out.println("Person name---"+ contactValue.firstName+ " " + contactValue.lastName);
+							countPerson++;
 						}
 					} else if (isCity == 0) {
 						if (contactValue.state.equals(place)) {
 							System.out.println("Person name---"+ contactValue.firstName+ " " + contactValue.lastName);
+							countPerson++;
 						}
 					}
 				});
@@ -56,14 +60,17 @@ public class AdressBookManage {
 				System.out.println("Contact list empty");
 			}
 		});
+		return countPerson;
 	}
 	
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("welcome and create address books ");
+		
 		AdressBookManage addBookManage = new AdressBookManage();
 		boolean created = addBookManage.createAddBooks();
 		System.out.println("Successfully created address books");
+		
 		addBookManage.viewAddBooks();
 		
 		if (created) {
@@ -73,12 +80,14 @@ public class AdressBookManage {
 			switch (ch) {
 				case 1: System.out.println("Enter the name of state: ");
 						String stateName = sc.nextLine();
-						addBookManage.findPersonByCityState(stateName,0);
+						int countByState = addBookManage.findPersonByCityState(stateName,0);
+						System.out.println("Person found by state = "+ countByState);
 						break;
 				
 				case 2: System.out.println("Enter the name of city: ");
 						String cityName = sc.nextLine();
-						addBookManage.findPersonByCityState(cityName,1);
+						int countByCity = addBookManage.findPersonByCityState(cityName,1);
+						System.out.println("Person found by city = "+ countByCity);
 						break;
 						
 				default:
