@@ -22,11 +22,19 @@ public class AddressBook {
 	
 	public ContactDetails getContactInfo() {
 		Scanner sc = new Scanner(System.in);
+		String fName= "", lName = "";
 		
-		System.out.println("Enter first name:");
-		String fName = sc.nextLine();
-		System.out.println("Enter last name:");
-		String lName = sc.nextLine();
+		boolean duplicateName = false;
+		
+		do {
+			System.out.println("Enter first name:");
+			fName = sc.nextLine();
+			System.out.println("Enter last name:");
+			lName = sc.nextLine();
+			duplicateName = checkDuplicateName(fName, lName);
+		}
+		while (duplicateName);
+		
 		System.out.println("Enter the address:");
 		String address = sc.nextLine();
 		System.out.println("Enter the city");
@@ -43,6 +51,17 @@ public class AddressBook {
 		
 		ContactDetails contact = new ContactDetails(fName, lName, address, city, state, zip, phoneNo, email);
 		return contact;
+	}
+	
+	public boolean checkDuplicateName(String fName, String lName) {
+		
+		for (ContactDetails contact: contactDetailList) {
+			if(fName.equals(contact.firstName) && lName.equals(contact.lastName)) {
+				System.out.println("This name already exists, try with other");
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void viewContacts() {
